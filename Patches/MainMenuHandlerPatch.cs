@@ -41,7 +41,7 @@ public static class MainMenuHandlerPatch {
 
     [HarmonyPrefix]
     [HarmonyPatch(nameof(MainMenuHandler.Start))]
-    public static bool StartPrefix() {
+    public static bool StartPrefix(MainMenuHandler __instance) {
         GameObject nameObject = GameObject.Find("PlayerName");
         
         RectTransform rectTransform = nameObject.GetComponent<RectTransform>();
@@ -49,9 +49,8 @@ public static class MainMenuHandlerPatch {
         rectTransform.position = new Vector3(rectTransform.position.x, rectTransform.position.y, rectTransform.position.z - 0.35f);
         
         InputField inputField = nameObject.AddComponent<InputField>();
-        inputField.textComponent = nameObject.GetComponent<Text>();
+        inputField.textComponent = __instance.m_PlayerNameText;
         inputField.text = PlayerPrefs.GetString("PlayerName", "Default Name");
-        inputField.ForceLabelUpdate();
         inputField.characterLimit = 30;
         inputField.onEndEdit = new InputField.SubmitEvent();
         inputField.onEndEdit.AddListener(delegate(string value) {
@@ -69,7 +68,9 @@ public static class MainMenuHandlerPatch {
         backgroundRectTransform.sizeDelta = new Vector2(15, 50);
         Image backgroundImage = newChildObject.AddComponent<Image>();
         backgroundImage.color = new Color(0f, 0f, 0f, 0.5f);
+
+        if (__instance.FirstTime) { __instance.PromptForPlayerName(); }
         
-        return true;
+        return false;
     }
 }
