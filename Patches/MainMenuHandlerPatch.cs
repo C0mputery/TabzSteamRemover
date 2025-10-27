@@ -2,6 +2,7 @@
 using System.Reflection.Emit;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TabzSteamRemover.Patches;
 
@@ -39,9 +40,36 @@ public static class MainMenuHandlerPatch {
     }
 
     [HarmonyPrefix]
-    [HarmonyPatch(nameof(MainMenuHandler.Awake))]
-    public static bool AwakePrefix() {
-        // Add Name Change UI
+    [HarmonyPatch(nameof(MainMenuHandler.Start))]
+    public static bool StartPrefix() {
+        GameObject nameObject = GameObject.Find("PlayerName");
+        
+        RectTransform rectTransform = nameObject.GetComponent<RectTransform>();
+        rectTransform.sizeDelta = new Vector2(750, rectTransform.sizeDelta.y);
+        rectTransform.position = new Vector3(rectTransform.position.x, rectTransform.position.y, rectTransform.position.z - 0.35f);
+        
+        InputField inputField = nameObject.AddComponent<InputField>();
+        inputField.textComponent = nameObject.GetComponent<Text>();
+        inputField.text = PlayerPrefs.GetString("PlayerName", "Default Name");
+        inputField.ForceLabelUpdate();
+        inputField.characterLimit = 30;
+        inputField.onEndEdit = new InputField.SubmitEvent();
+        inputField.onEndEdit.AddListener(delegate(string value) {
+            PlayerPrefs.SetString("PlayerName", value);
+            PlayerPrefs.Save();
+            PhotonNetwork.playerName = value;
+        });
+
+        GameObject newChildObject = new GameObject("background");
+        RectTransform backgroundRectTransform = newChildObject.AddComponent<RectTransform>();
+        backgroundRectTransform.SetParent(nameObject.transform, false);
+        backgroundRectTransform.anchorMin = new Vector2(0, 0);
+        backgroundRectTransform.anchorMax = new Vector2(1, 1);
+        backgroundRectTransform.anchoredPosition = Vector2.zero;
+        backgroundRectTransform.sizeDelta = new Vector2(15, 50);
+        Image backgroundImage = newChildObject.AddComponent<Image>();
+        backgroundImage.color = new Color(0f, 0f, 0f, 0.5f);
+        
         return true;
     }
 }

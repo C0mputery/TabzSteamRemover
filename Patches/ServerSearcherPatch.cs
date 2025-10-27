@@ -18,12 +18,12 @@ public static class ServerSearcherPatch {
         }
         __instance.anim.state1 = false;
         __instance.ClearServerList();
-        for (int i = 0; i < roomList.Length; i++) {
+        foreach (RoomInfo roomInfo in roomList) {
             GameObject gameObject = Object.Instantiate(__instance.mServerCell, __instance.mServerListContent, true);
             gameObject.GetComponent<SetServerTextValues>().InitServerValues(new ServerSearcher.ServerCellParams {
-                LobbyName = roomList[i].Name,
-                PlayersInside = roomList[i].PlayerCount,
-                PlayersMax = roomList[i].MaxPlayers
+                LobbyName = roomInfo.Name,
+                PlayersInside = roomInfo.PlayerCount,
+                PlayersMax = roomInfo.MaxPlayers
             });
             gameObject.SetActive(true);
         }
