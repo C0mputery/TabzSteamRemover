@@ -23,13 +23,16 @@
   
   <ItemGroup>
     <Reference Include="Assembly-CSharp" Publicize="true">
-      <HintPath>..\..\Desktop\TABZ_SteamFiles\April4th\GAME_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\Desktop\Tabz-1-23\GAME_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\Desktop\TABZ_SteamFiles\April4th\GAME_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>..\..\Desktop\Tabz-1-23\GAME_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon3Unity3D">
+      <HintPath>..\..\Desktop\Tabz-1-23\GAME_Data\Managed\Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\Desktop\TABZ_SteamFiles\April4th\GAME_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\..\Desktop\Tabz-1-23\GAME_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
