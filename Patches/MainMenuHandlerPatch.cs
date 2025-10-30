@@ -42,7 +42,7 @@ public static class MainMenuHandlerPatch {
     [HarmonyPrefix]
     [HarmonyPatch(nameof(MainMenuHandler.Start))]
     public static bool StartPrefix(MainMenuHandler __instance) {
-        GameObject nameObject = GameObject.Find("PlayerName");
+        GameObject nameObject = __instance.m_PlayerNameText.gameObject;
         
         RectTransform rectTransform = nameObject.GetComponent<RectTransform>();
         rectTransform.sizeDelta = new Vector2(750, rectTransform.sizeDelta.y);
